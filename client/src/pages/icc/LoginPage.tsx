@@ -1,114 +1,127 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Shield, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, LogIn } from "lucide-react";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function IccLoginPage() {
-    const { login } = useAuth();
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPass, setShowPass] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-        setLoading(true);
-        try {
-            await login(email, password);
-            navigate('/icc/dashboard');
-        } catch (err: unknown) {
-            const msg = err instanceof Error ? err.message : 'Login failed';
-            setError((err as { response?: { data?: { error?: string } } })?.response?.data?.error ?? msg);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPass, setShowPass] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-    return (
-        <div className="min-h-screen bg-[#F9FAFB] font-main flex flex-col">
-            <Navbar />
-            <div className="flex-1 flex items-center justify-center p-4">
-                <div className="w-full max-w-md">
-                    {/* Logo */}
-                    <div className="text-center mb-10">
-                        <div className="w-16 h-16 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                            <Shield className="w-8 h-8 text-blue-600" />
-                        </div>
-                        <h1 className="text-3xl font-bold text-gray-900 font-special tracking-wide">SafeDesk Portal</h1>
-                        <p className="text-gray-500 mt-2">Authorized Access Only</p>
-                    </div>
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-                    {/* Card */}
-                    <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-lg shadow-gray-100">
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    placeholder="icc@company.com"
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                                <div className="relative">
-                                    <input
-                                        type={showPass ? 'text' : 'password'}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                        placeholder="••••••••"
-                                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPass(!showPass)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                                    >
-                                        {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                                    </button>
-                                </div>
-                            </div>
+    try {
+      await login(email, password);
+      navigate("/icc/dashboard");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Login failed";
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                            {error && (
-                                <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-red-600 text-sm">
-                                    {error}
-                                </div>
-                            )}
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-6">
+      
+      {/* MAIN CARD */}
+      <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 flex">
 
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-200"
-                            >
-                                {loading ? (
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                ) : (
-                                    <>
-                                        <LogIn className="w-5 h-5" />
-                                        Sign In
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    </div>
+        {/* LEFT SIDE - FORM */}
+        <div className="w-full lg:w-1/2 p-12 flex flex-col justify-center">
+          
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Welcome Back!
+          </h2>
+          <p className="text-gray-500 text-sm mb-8">
+            Please login to your ICC account
+          </p>
 
-                    <p className="text-center mt-8">
-                        <Link to="/" className="text-gray-500 hover:text-gray-900 text-sm transition-colors flex items-center justify-center gap-2">
-                            <ArrowLeft className="w-4 h-4" /> Back to Home
-                        </Link>
-                    </p>
-                </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            
+            {/* Email */}
+            <div>
+              <label className="text-sm text-gray-600 block mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                placeholder="icc@company.com"
+              />
             </div>
-            <Footer />
+
+            {/* Password */}
+            <div>
+              <label className="text-sm text-gray-600 block mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPass ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPass(!showPass)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+                >
+                  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Error */}
+            {error && (
+              <div className="text-sm text-red-500 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+                {error}
+              </div>
+            )}
+
+            {/* Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <LogIn size={18} />
+                  Login
+                </>
+              )}
+            </button>
+          </form>
         </div>
-    );
+
+        {/* RIGHT SIDE - IMAGE */}
+        <div className="hidden 
+          md:flex items-center lg:w-1/2 relative">
+          <img
+            src="https://storage.googleapis.com/journals-stmjournals-com-wp-media-to-gcp-offload/2024/02/ce4bee08-posh.png"
+            alt="Login Visual"
+            className="w-50%  h-50% object"
+          />
+        </div>
+
+      </div>
+    </div>
+  );
 }

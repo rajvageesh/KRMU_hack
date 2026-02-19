@@ -74,14 +74,12 @@ export default function TrackPage() {
     // ─── Verify Form ──────────────────────────────────────────────────────────
     if (!complaint) {
         return (
-            <div className="min-h-screen bg-[#F9FAFB] font-main flex flex-col">
-                <Navbar />
+            <div className=" bg-[#F9FAFB] font-main flex flex-col">
+                {/* <Navbar /> */}
                 <div className="flex-1 flex items-center justify-center p-4">
-                    <div className="w-full max-w-md">
+                    <div className="w-full h-screen flex flex-col justify-center max-w-md">
                         <div className="text-center mb-10">
-                            <div className="w-16 h-16 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                <Search className="w-8 h-8 text-blue-600" />
-                            </div>
+                          
                             <h1 className="text-3xl font-bold text-gray-900 font-special tracking-wide">Track Your Case</h1>
                             <p className="text-gray-500 mt-2">Enter your Case ID and PIN to view status</p>
                         </div>
@@ -101,7 +99,7 @@ export default function TrackPage() {
                                 </div>
                                 {error && <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-red-600 text-sm flex items-center gap-2"><AlertCircle className="w-4 h-4" />{error}</div>}
                                 <button type="submit" disabled={loading}
-                                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200">
+                                    className="w-full bg-green-500 hover:scale-102 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200">
                                     {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><Search className="w-5 h-5" /> Find My Case</>}
                                 </button>
                             </form>
@@ -121,12 +119,10 @@ export default function TrackPage() {
     // ─── Case View ────────────────────────────────────────────────────────────
     return (
         <div className="min-h-screen bg-[#F9FAFB] font-main flex flex-col">
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="flex-1 max-w-4xl mx-auto w-full p-4 py-8">
                 <div className="flex items-center gap-4 mb-8 bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
-                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
-                        <Shield className="w-6 h-6 text-blue-600" />
-                    </div>
+                   
                     <div className="flex-1">
                         <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Case ID</p>
                         <h1 className="text-2xl font-bold text-gray-900 font-mono tracking-tight">{complaint.caseId}</h1>
@@ -253,4 +249,9 @@ export default function TrackPage() {
             <Footer />
         </div>
     );
+
+
+
+
+
 }

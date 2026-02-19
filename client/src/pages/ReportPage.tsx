@@ -36,7 +36,7 @@ export default function ReportPage() {
     });
     const [files, setFiles] = useState<File[]>([]);
     const [aiLoading, setAiLoading] = useState(false);
-    const [aiResult, setAiResult] = useState<AIImproveResponse | null>(null);
+    // const [aiResult, setAiResult] = useState<AIImproveResponse | null>(null);
     const [submitting, setSubmitting] = useState(false);
     const [result, setResult] = useState<SubmitComplaintResponse | null>(null);
     const [copied, setCopied] = useState(false);
@@ -44,22 +44,22 @@ export default function ReportPage() {
     const update = (field: keyof FormData, value: string | boolean | SeverityLevel) =>
         setForm((f) => ({ ...f, [field]: value }));
 
-    const handleAiImprove = async () => {
-        if (form.description.length < 20) return;
-        setAiLoading(true);
-        try {
-            const res = await api.post<AIImproveResponse>('/ai/improve', { description: form.description });
-            setAiResult(res.data);
-        } catch { /* silently fail */ }
-        finally { setAiLoading(false); }
-    };
+    // const handleAiImprove = async () => {
+    //     if (form.description.length < 20) return;
+    //     setAiLoading(true);
+    //     try {
+    //         const res = await api.post<AIImproveResponse>('/ai/improve', { description: form.description });
+    //         setAiResult(res.data);
+    //     } catch { /* silently fail */ }
+    //     finally { setAiLoading(false); }
+    // };
 
-    const applyAiSuggestion = () => {
-        if (!aiResult) return;
-        update('description', aiResult.improvedText);
-        update('severityLevel', aiResult.detectedSeverity);
-        setAiResult(null);
-    };
+    // const applyAiSuggestion = () => {
+    //     if (!aiResult) return;
+    //     update('description', aiResult.improvedText);
+    //     update('severityLevel', aiResult.detectedSeverity);
+    //     setAiResult(null);
+    // };
 
     const handleFileAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = Array.from(e.target.files ?? []).filter((f) => f.size <= 10 * 1024 * 1024);
@@ -99,8 +99,8 @@ export default function ReportPage() {
     // ─── Success Screen ───────────────────────────────────────────────────────
     if (result) {
         return (
-            <div className="min-h-screen bg-[#F9FAFB] font-main flex flex-col">
-                <Navbar />
+            <div className="min-h-screen bg-lenear-to-br from-green-50 to-blue-50 font-main flex flex-col">
+                    
                 <div className="flex-1 flex items-center justify-center p-4">
                     <div className="w-full max-w-md text-center">
                         <div className="w-20 h-20 bg-green-100 border border-green-200 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -149,7 +149,7 @@ export default function ReportPage() {
     // ─── Form Steps ───────────────────────────────────────────────────────────
     return (
         <div className="min-h-screen bg-[#F9FAFB] font-main flex flex-col">
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="flex-1 max-w-3xl mx-auto w-full p-4 py-12">
                 {/* Header */}
                 <div className="text-center mb-10">
@@ -230,43 +230,17 @@ export default function ReportPage() {
                                     className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none transition-all" />
                                 <div className="flex justify-between items-center mt-2">
                                     <p className="text-xs text-gray-500">{form.description.length} characters</p>
-                                    {form.description.length >= 20 && (
+                                    {/* {form.description.length >= 20 && (
                                         <button onClick={handleAiImprove} disabled={aiLoading}
                                             className="flex items-center gap-2 text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-100 transition-colors disabled:opacity-60">
                                             <Sparkles className="w-3.5 h-3.5" />
                                             {aiLoading ? 'Analyzing...' : 'Improve with AI'}
                                         </button>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
 
-                            {/* AI Assist */}
-                            {aiResult && (
-                                <div className="bg-blue-50 border border-blue-100 rounded-xl p-5 animate-in fade-in slide-in-from-bottom-2">
-                                    <div className="flex items-center gap-2 text-blue-700 font-semibold mb-3">
-                                        <Sparkles className="w-4 h-4" />
-                                        AI Suggestion
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div className="bg-white border border-blue-100 rounded-lg p-4 shadow-sm">
-                                            <p className="text-sm text-gray-800 leading-relaxed">{aiResult.improvedText}</p>
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-xs text-gray-500">Detected severity:</span>
-                                                <span className={`text-xs font-bold px-2 py-1 rounded-md uppercase tracking-wide ${aiResult.detectedSeverity === 'High' ? 'bg-red-100 text-red-700' : aiResult.detectedSeverity === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
-                                                    {aiResult.detectedSeverity}
-                                                </span>
-                                            </div>
-                                            <button onClick={applyAiSuggestion}
-                                                className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium">
-                                                Apply Text
-                                            </button>
-                                        </div>
-                                        <p className="text-xs text-blue-600 italic border-t border-blue-100 pt-2">{aiResult.guidanceMessage}</p>
-                                    </div>
-                                </div>
-                            )}
+                           
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Severity Level</label>
@@ -403,6 +377,14 @@ export default function ReportPage() {
                     </div>
                 </div>
             </div>
+              <p className="text-center mt-8">
+                        <Link
+                            to="/"
+                            className="text-gray-500 hover:text-gray-900 text-sm flex items-center justify-center gap-2"
+                        >
+                            <ArrowLeft className="w-4 h-4" /> Back to Home
+                        </Link>
+                    </p>
             <Footer />
         </div>
     );

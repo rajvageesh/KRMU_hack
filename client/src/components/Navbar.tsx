@@ -20,7 +20,7 @@ export default function Navbar() {
           
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <FaShieldAlt className="text-purple-300 text-2xl" />
+            <FaShieldAlt className="text-green-400 text-2xl" />
             <h1 className="text-xl font-bold tracking-wide">
               SafeDesk
             </h1>
@@ -28,16 +28,16 @@ export default function Navbar() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8 font-medium">
-            <a href="#report" className="hover:text-purple-300 transition">
+            <a href="#report" className="hover:text-green-400 transition">
               Report
             </a>
-            <a href="#evidence" className="hover:text-purple-300 transition">
+            <a href="#evidence" className="hover:text-green-400 transition">
               Evidence Vault
             </a>
-            <a href="#chat" className="hover:text-purple-300 transition">
+            <a href="#chat" className="hover:text-green-400 transition">
               Anonymous Chat
             </a>
-            <a href="#dashboard" className="hover:text-purple-300 transition">
+            <a href="#dashboard" className="hover:text-green-400 transition">
               Dashboard
             </a>
           </div>
@@ -63,25 +63,25 @@ export default function Navbar() {
           <div className="md:hidden bg-indigo-900 rounded-xl p-4 space-y-4">
             <a
               href="#report"
-              className="block hover:text-purple-300 transition"
+              className="block hover:text-green-400 transition"
             >
               Report
             </a>
             <a
               href="#evidence"
-              className="block hover:text-purple-300 transition"
+              className="block hover:text-green-400 transition"
             >
               Evidence Vault
             </a>
             <a
               href="#chat"
-              className="block hover:text-purple-300 transition"
+              className="block hover:text-green-400 transition"
             >
               Anonymous Chat
             </a>
             <a
               href="#dashboard"
-              className="block hover:text-purple-300 transition"
+              className="block hover:text-green-400 transition"
             >
               Dashboard
             </a>
